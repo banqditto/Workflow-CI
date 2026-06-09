@@ -43,7 +43,7 @@ jobs:
     - name: Build MLflow Docker Image
       run: |
         # Mengemas model terbaik menjadi Docker Image siap pakai
-        mlflow models build-docker -m "models:/Latihan Credit Scoring/latest" -n "${{ secrets.DOCKERHUB_USERNAME }}/diabetes-model-hub:latest"
+        mlflow models build-docker -m "$(ls -d mlruns/0/*/artifacts/model | head -n 1)" -n "${{ secrets.DOCKERHUB_USERNAME }}/diabetes-model-hub:latest"
     - name: Push Docker Image to Docker Hub
       run: |
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/diabetes-model-hub:latest
