@@ -2,4 +2,4 @@ name: Diabetes_Retraining_Pipeline
 
 entry_points:
   main:
-    command: "python modelling_tuning.py"
+    command: "python modelling.py"
