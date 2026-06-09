@@ -7,6 +7,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, ConfusionMatrixDisplay
 import dagshub
 import mlflow
+import shutil
 from mlflow.models import infer_signature
 
 def setup_dagshub():
@@ -109,6 +110,13 @@ def main():
         if os.path.exists(json_path): os.remove(json_path)
         
         print("Selesai! Struktur run terbaru kamu sekarang dijamin rapi dan bersatu di halaman yang sama.")
+        if os.path.exists("target_model"):
+            shutil.rmtree("target_model")
+            
+        mlflow.sklearn.save_model(best_model, "target_model")
+        print("Selesai menyalin model terbaik ke folder statis ./target_model")
 
 if __name__ == "__main__":
     main()
+
+
