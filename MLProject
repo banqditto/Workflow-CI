@@ -1,7 +1,0 @@
-name: Diabetes_Retraining_Pipeline
-
-python_env: conda.yaml
-
-entry_points:
-  main:
-    command: "python modelling_tuning.py"

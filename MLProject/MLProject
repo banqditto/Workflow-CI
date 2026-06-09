@@ -1,0 +1,7 @@
+name: Diabetes_Retraining_Workflow
+
+env_manager: local
+
+entry_points:
+  main:
+    command: "python modelling.py"
