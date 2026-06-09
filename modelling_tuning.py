@@ -12,8 +12,8 @@ from mlflow.models import infer_signature
 def setup_dagshub():
     REPO_OWNER = "banqditto"
     REPO_NAME = "Eksperimen_SML_Anggi-permana"
-
-   if "DAGSHUB_TOKEN" in os.environ:
+    
+    if "DAGSHUB_TOKEN" in os.environ:
         print("Mendeteksi GitHub Actions. Menyuntikkan token langsung ke URL...")
         token = os.environ["DAGSHUB_TOKEN"]
         remote_url = f"https://{REPO_OWNER}:{token}@dagshub.com/{REPO_OWNER}/{REPO_NAME}.mlflow"
