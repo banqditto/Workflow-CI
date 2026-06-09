@@ -50,7 +50,7 @@ def main():
     best_params = grid_search.best_params_
     
     # 3. Mulai Pencatatan MANUAL ke MLflow DagsHub (Mengunci Nilai Advance)
-    with mlflow.start_run():
+    with mlflow.start_run(run_name="retraining_automated"):
         print("Running modelling_tuning.py (Struktur Artefak Sesuai Dicoding)...")
         
         # Log Hyperparameters secara manual
