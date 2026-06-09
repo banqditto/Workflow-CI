@@ -84,38 +84,38 @@ def main():
         # Kita buat sementara di root folder agar jalurnya aman
         
         # Artefak 1: Plot Gambar Confusion Matrix
-        cm = confusion_matrix(y_test, y_pred)
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=[0, 1])
-        fig, ax = plt.subplots(figsize=(6, 6))
-        disp.plot(ax=ax, cmap='Blues')
-        plt.title("Confusion Matrix (Tuned)")
+    cm = confusion_matrix(y_test, y_pred)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=[0, 1])
+    fig, ax = plt.subplots(figsize=(6, 6))
+    disp.plot(ax=ax, cmap='Blues')
+    plt.title("Confusion Matrix (Tuned)")
         
-        cm_path = "training_confusion_matrix.png"
-        plt.savefig(cm_path)
-        plt.close()
-        mlflow.log_artifact(cm_path) # Terunggah langsung di halaman luar artefak
+    cm_path = "training_confusion_matrix.png"
+    plt.savefig(cm_path)
+    plt.close()
+    mlflow.log_artifact(cm_path) # Terunggah langsung di halaman luar artefak
         
         # Artefak 2: Ringkasan Dataset dalam bentuk file JSON
-        dataset_info = {
-            "train_samples": int(X_train.shape[0]),
-            "test_samples": int(X_test.shape[0]),
-            "features_list": list(X_train.columns)
-        }
-        json_path = "metric_info.json"
-        with open(json_path, "w") as f:
-            json.dump(dataset_info, f, indent=4)
-        mlflow.log_artifact(json_path) # Terunggah langsung di halaman luar artefak
+    dataset_info = {
+        "train_samples": int(X_train.shape[0]),
+        "test_samples": int(X_test.shape[0]),
+        "features_list": list(X_train.columns)
+    }
+    json_path = "metric_info.json"
+    with open(json_path, "w") as f:
+        json.dump(dataset_info, f, indent=4)
+    mlflow.log_artifact(json_path) # Terunggah langsung di halaman luar artefak
         
         # Bersihkan file lokal setelah sukses terunggah ke cloud
-        if os.path.exists(cm_path): os.remove(cm_path)
-        if os.path.exists(json_path): os.remove(json_path)
+    if os.path.exists(cm_path): os.remove(cm_path)
+    if os.path.exists(json_path): os.remove(json_path)
         
-        print("Selesai! Struktur run terbaru kamu sekarang dijamin rapi dan bersatu di halaman yang sama.")
-        if os.path.exists("target_model"):
-            shutil.rmtree("target_model")
+    print("Selesai! Struktur run terbaru kamu sekarang dijamin rapi dan bersatu di halaman yang sama.")
+    if os.path.exists("target_model"):
+        shutil.rmtree("target_model")
             
-        mlflow.sklearn.save_model(best_model, "target_model")
-        print("Selesai menyalin model terbaik ke folder statis ./target_model")
+    mlflow.sklearn.save_model(best_model, "target_model")
+    print("Selesai menyalin model terbaik ke folder statis ./target_model")
 
 if __name__ == "__main__":
     main()
