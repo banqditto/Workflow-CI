@@ -32,7 +32,6 @@ jobs:
         MLFLOW_TRACKING_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
-        export MLFLOW_TRACKING_URI=file://$PWD/mlruns
         mlflow run . --env-manager=local
 
     - name: Log in to Docker Hub
