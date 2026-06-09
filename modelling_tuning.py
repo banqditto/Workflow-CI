@@ -14,12 +14,17 @@ def setup_dagshub():
     REPO_NAME = "Eksperimen_SML_Anggi-permana"
 
     if "DAGSHUB_TOKEN" in os.environ:
-        os.environ["DAGSHUB_CLIENT_TOKEN"] = os.environ["DAGSHUB_TOKEN"]
+        print("Mendeteksi lingkungan GitHub Actions. Menggunakan direct MLflow tracking URI...")
+        # Pasang URL tracking remote DagsHub secara manual
+        remote_url = f"https://dagshub.com/{REPO_OWNER}/{REPO_NAME}.mlflow"
+        mlflow.set_tracking_uri(remote_url)
+        mlflow.set_experiment("Latihan Credit Scoring")
+    else:
+        print("Mendeteksi lingkungan Lokal. Menjalankan dagshub.init()...")
+        # Jika dijalankan di laptopmu sendiri, biarkan pakai init bawaan
+        dagshub.init(repo_owner=REPO_OWNER, repo_name=REPO_NAME, mlflow=True)
+        mlflow.set_experiment("Latihan Credit Scoring")
         
-    # Inisialisasi online tracking ke DagsHub
-    dagshub.init(repo_owner=REPO_OWNER, repo_name=REPO_NAME, mlflow=True)
-    mlflow.set_experiment("Latihan Credit Scoring")
-
 def main():
     setup_dagshub()
     
