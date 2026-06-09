@@ -1,6 +1,6 @@
 name: Diabetes_Retraining_Pipeline
 
-conda_env: conda.yaml
+python_env: conda.yaml
 
 entry_points:
   main:
