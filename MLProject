@@ -1,4 +1,6 @@
-name: Diabetes_Retraining_Pipeline
+name: Diabetes_Retraining_Workflow
+
+env_manager: local
 
 entry_points:
   main:
