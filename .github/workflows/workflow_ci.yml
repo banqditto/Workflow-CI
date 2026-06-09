@@ -32,6 +32,7 @@ jobs:
         MLFLOW_TRACKING_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
+        cd MLProject
         mlflow run . --experiment-name="Diabetes_Retraining_Clean" --env-manager=local
 
     - name: Upload Training Artifacts to GitHub Repository
