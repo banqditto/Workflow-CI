@@ -42,7 +42,9 @@ jobs:
 
     - name: Build MLflow Docker Image
       run: |
-        mlflow models build-docker -m "$(find mlruns/0/ -maxdepth 2 -name "artifacts" | head -n 1)/model" -n "${{ secrets.DOCKERHUB_USERNAME }}/diabetes-model-hub:latest"
+        cp -r mlruns/0/*/artifacts/model ./target_model
+        mlflow models build-docker -m ./target_model -n "${{ secrets.DOCKERHUB_USERNAME }}/diabetes-model-hub:latest"
+        
         
     - name: Push Docker Image to Docker Hub
       run: |
