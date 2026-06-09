@@ -54,7 +54,7 @@ jobs:
 
     - name: Build MLflow Docker Image
       run: |
-        docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/diabetes-model-hub:latest" .
+        docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/diabetes-model-hub:latest" -f MLProject/Dockerfile MLProject
         
         
     - name: Push Docker Image to Docker Hub
