@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Run actions/checkout@v3
       uses: actions/checkout@v3
 
     - name: Set up Python 3.12.7
@@ -17,12 +17,12 @@ jobs:
       with:
         python-version: '3.12.7'
 
-    - name: Install Base Dependencies
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install virtualenv pandas scikit-learn mlflow==2.19.0 dagshub
 
-    - name: Run MLflow Project (Retraining)
+    - name: Run MLflow Project
       env:
         # Menghubungkan kredensial DagsHub secara aman via GitHub Secrets
         DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
@@ -33,6 +33,17 @@ jobs:
         MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
         mlflow run . --experiment-name="Diabetes_Retraining_Clean" --env-manager=local
+
+    - name: Upload Training Artifacts to GitHub Repository
+      uses: actions/upload-artifact@v4
+      with:
+          name: diabetes-model-artifacts
+          path: |
+            MLProject/mlruns/
+            MLProject/target_model/
+            MLProject/*.json
+            MLProject/*.png
+          retention-days: 7
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
