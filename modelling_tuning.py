@@ -12,7 +12,10 @@ from mlflow.models import infer_signature
 def setup_dagshub():
     REPO_OWNER = "banqditto"
     REPO_NAME = "Eksperimen_SML_Anggi-permana"
-    
+
+    if "DAGSHUB_TOKEN" in os.environ:
+        os.environ["DAGSHUB_CLIENT_TOKEN"] = os.environ["DAGSHUB_TOKEN"]
+        
     # Inisialisasi online tracking ke DagsHub
     dagshub.init(repo_owner=REPO_OWNER, repo_name=REPO_NAME, mlflow=True)
     mlflow.set_experiment("Latihan Credit Scoring")
