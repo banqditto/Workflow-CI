@@ -42,7 +42,6 @@ jobs:
 
     - name: Build MLflow Docker Image
       run: |
-        cp -r mlruns/0/*/artifacts/model ./target_model
         mlflow models build-docker -m ./target_model -n "${{ secrets.DOCKERHUB_USERNAME }}/diabetes-model-hub:latest"
         
         
