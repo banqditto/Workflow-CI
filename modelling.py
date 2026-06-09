@@ -4,9 +4,15 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import random
 import numpy as np
+import os
 
-
-mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+# Deteksi apakah skrip sedang berjalan di dalam GitHub Actions
+if os.environ.get("GITHUB_ACTIONS") == "true":
+    # Jika di GitHub, paksa simpan murni ke folder lokal runner
+    mlflow.set_tracking_uri("file://" + os.path.join(os.getcwd(), "mlruns"))
+else:
+    # Jika di laptop lokal kamu, silakan gunakan tracking URI lamamu (Port 5000 / DagsHub)
+    mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
 
 # Create a new MLflow Experiment
