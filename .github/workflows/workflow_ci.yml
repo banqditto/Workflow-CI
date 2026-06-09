@@ -32,7 +32,7 @@ jobs:
         MLFLOW_TRACKING_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
-        python modelling_tuning.py
+        mlflow run . --env-manager=local
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
