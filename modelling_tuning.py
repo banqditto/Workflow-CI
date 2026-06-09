@@ -13,9 +13,16 @@ def setup_dagshub():
     REPO_OWNER = "banqditto"
     REPO_NAME = "Eksperimen_SML_Anggi-permana"
 
-    # Set jalur URI pelacakan langsung ke DagsHub
-    remote_url = f"https://dagshub.com/{REPO_OWNER}/{REPO_NAME}.mlflow"
-    mlflow.set_tracking_uri(remote_url)
+   if "DAGSHUB_TOKEN" in os.environ:
+        print("Mendeteksi GitHub Actions. Menyuntikkan token langsung ke URL...")
+        token = os.environ["DAGSHUB_TOKEN"]
+        remote_url = f"https://{REPO_OWNER}:{token}@dagshub.com/{REPO_OWNER}/{REPO_NAME}.mlflow"
+        mlflow.set_tracking_uri(remote_url)
+    else:
+        print("Mendeteksi lingkungan Lokal...")
+        remote_url = f"https://dagshub.com/{REPO_OWNER}/{REPO_NAME}.mlflow"
+        mlflow.set_tracking_uri(remote_url)
+        
     mlflow.set_experiment("Latihan Credit Scoring")
         
 def main():
