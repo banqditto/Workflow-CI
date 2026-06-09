@@ -27,6 +27,10 @@ jobs:
         # Menghubungkan kredensial DagsHub secara aman via GitHub Secrets
         DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
         DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+        DAGSHUB_CLIENT_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+        MLFLOW_TRACKING_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+      run: |
+        mlflow run . --env-manager local
       run: |
         # Menjalankan perintah retrain sesuai standarisasi instruksi project
         mlflow run . --env-manager local
