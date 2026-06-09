@@ -52,35 +52,33 @@ def main():
     best_model = grid_search.best_estimator_
     best_params = grid_search.best_params_
     
-    # 3. Mulai Pencatatan MANUAL ke MLflow DagsHub (Mengunci Nilai Advance)
-    with mlflow.start_run(run_name="retraining_automated"):
-        print("Running modelling_tuning.py (Struktur Artefak Sesuai Dicoding)...")
+    print("Running modelling.py via MLflow Project...")
         
         # Log Hyperparameters secara manual
-        for param_name, param_val in best_params.items():
-            mlflow.log_param(param_name, param_val)
-        mlflow.log_param("model_type", "RandomForestClassifier_Tuned")
+    for param_name, param_val in best_params.items():
+        mlflow.log_param(param_name, param_val)
+    mlflow.log_param("model_type", "RandomForestClassifier_Tuned")
         
         # Evaluasi model pada data uji
-        y_pred = best_model.predict(X_test)
+    y_pred = best_model.predict(X_test)
         
         # Log Metrik Evaluasi secara manual
-        mlflow.log_metric("accuracy", accuracy_score(y_test, y_pred))
-        mlflow.log_metric("precision", precision_score(y_test, y_pred))
-        mlflow.log_metric("recall", recall_score(y_test, y_pred))
-        mlflow.log_metric("f1_score", f1_score(y_test, y_pred))
+    mlflow.log_metric("accuracy", accuracy_score(y_test, y_pred))
+    mlflow.log_metric("precision", precision_score(y_test, y_pred))
+    mlflow.log_metric("recall", recall_score(y_test, y_pred))
+    mlflow.log_metric("f1_score", f1_score(y_test, y_pred))
         
         # PENTING: Membuat signature skema data agar 'estimator.html' terbuat dengan benar
-        signature = infer_signature(X_train, best_model.predict(X_train))
+    signature = infer_signature(X_train, best_model.predict(X_train))
         
         # Simpan model ke dalam folder bernama 'model' (Sesuai Kriteria Gambar Dicoding)
         # Parameter input_example inilah yang otomatis memicu pembuatan file estimator.html sejajar di luar folder model
-        mlflow.sklearn.log_model(
-            sk_model=best_model, 
-            artifact_path="model", 
-            signature=signature,
-            input_example=X_train.head(1)
-        )
+    mlflow.sklearn.log_model(
+        sk_model=best_model, 
+        artifact_path="model", 
+        signature=signature,
+        input_example=X_train.head(1)
+    )
         
         # --- Kriteria Advance: Membuat & Mengunggah 2 Artefak Tambahan Secara Manual ---
         # Kita buat sementara di root folder agar jalurnya aman
