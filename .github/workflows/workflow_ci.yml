@@ -31,9 +31,6 @@ jobs:
         MLFLOW_TRACKING_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
       run: |
         mlflow run . --env-manager local
-      run: |
-        # Menjalankan perintah retrain sesuai standarisasi instruksi project
-        mlflow run . --env-manager local
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
